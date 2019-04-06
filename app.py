@@ -3,6 +3,9 @@ import save
 
 app = Flask(__name__)
 
+@app.route("/")
+def index():
+        return "Index"
 
 @app.route("/save_activity_log", methods=["POST"])
 def save_activity_log():
