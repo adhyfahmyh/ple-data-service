@@ -10,10 +10,10 @@ def index():
 @app.route("/save_activity_log", methods=["POST"])
 def save_activity_log():
     if request.method == "POST":
-        print(request.data)
+        print(request.json)
         save.save_activity_log()
         return "Saved"
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
