@@ -11,6 +11,7 @@ def index():
 def save_activity_log():
     if request.method == "POST":
         print(request.json)
+        print(request.data)
         save.save_activity_log()
         return "Saved"
 
