@@ -14,7 +14,7 @@ def save_activity_log():
     if request.method == "POST":
         data = request.json
         
-        save.save_activity_log(data)
+        save.save_activity_log(data["username"])
         return "Saved"
 
 
