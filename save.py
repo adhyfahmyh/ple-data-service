@@ -7,7 +7,7 @@ def save_activity_log(username):
                                     database='plewebid_wp389',
                                     user='plewebid_wp389',
                                     password='plewebid_wp389')
-        sql_select_Query = "INSERT INTO selection (UserId, ContentId, Frequency) VALUES ('"+username+""', '31', '3')"
+        sql_select_Query = "INSERT INTO selection (UserId, ContentId, Frequency) VALUES ('"+username+"', '31', '3')"
         cursor = mySQLconnection.cursor()
         cursor.execute(sql_select_Query)
     except Error as e :
