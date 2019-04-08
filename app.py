@@ -12,9 +12,9 @@ def index():
 @app.route("/save_activity_log", methods=["POST"])
 def save_activity_log():
     if request.method == "POST":
-        print(request.json)
-        print(request.data)
-        save.save_activity_log()
+        data = request.json
+        
+        save.save_activity_log(data)
         return "Saved"
 
 

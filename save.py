@@ -1,13 +1,13 @@
 import mysql.connector
 from mysql.connector import Error
 
-def save_activity_log():
+def save_activity_log(username):
     try:
         mySQLconnection = mysql.connector.connect(host='103.28.53.243',
                                     database='plewebid_wp389',
                                     user='plewebid_wp389',
                                     password='plewebid_wp389')
-        sql_select_Query = "INSERT INTO selection (UserId, ContentId, Frequency) VALUES ('12', '31', '3')"
+        sql_select_Query = "INSERT INTO selection (UserId, ContentId, Frequency) VALUES ('"+username+""', '31', '3')"
         cursor = mySQLconnection.cursor()
         cursor.execute(sql_select_Query)
     except Error as e :
