@@ -129,7 +129,7 @@ def save_close_date_activity(username, shortlink):
                                                       user='plewebid_wp389',
                                                       password='plewebid_wp389')
             sql_select_Query = "UPDATE `active_time` SET `Time_Out`=NOW() WHERE `Username`='" + \
-                username+"' AND `ContentId`='"+post_id+"'"
+                str(username)+"' AND `ContentId`='"+str(post_id)+"'"
             cursor = mySQLconnection.cursor()
             cursor.execute(sql_select_Query)
         except Error as e:
