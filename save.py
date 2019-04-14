@@ -41,9 +41,9 @@ def is_activity_log_available(username, post_id):
             print("MySQL connection is closed")
 
 
-def save_activity_log(username, shortlink):
+def save_activity_log(username, shortlink, datetime):
     post_id = get_content_id(shortlink)
-    save_open_date_activity(username, post_id)
+    save_open_date_activity(username, post_id, datetime)
     if is_activity_log_available(username, post_id):
         try:
             mySQLconnection = mysql.connector.connect(host='103.28.53.243',
@@ -80,14 +80,14 @@ def save_activity_log(username, shortlink):
                 print("MySQL connection is closed")
 
 
-def save_open_date_activity(username, content_id):
+def save_open_date_activity(username, content_id, datetime):
     try:
         mySQLconnection = mysql.connector.connect(host='103.28.53.243',
                                                   database='plewebid_wp389',
                                                   user='plewebid_wp389',
                                                   password='plewebid_wp389')
         sql_select_Query = "INSERT INTO `active_time`(`Username`, `ContentId`, `Time_In`) VALUES ('" + \
-            str(username)+"', '"+str(content_id)+"', NOW())"
+            str(username)+"', '"+str(content_id)+"', '"+str(datetime)+"')"
         cursor = mySQLconnection.cursor()
         cursor.execute(sql_select_Query)
     except Error as e:
@@ -119,7 +119,7 @@ def is_activity_date_available(username, post_id):
             print("MySQL connection is closed")
 
 
-def save_close_date_activity(username, shortlink):
+def save_close_date_activity(username, shortlink, datetime):
     print("Closed")
     post_id = get_content_id(shortlink)
     if is_activity_date_available(username, post_id):
@@ -129,7 +129,7 @@ def save_close_date_activity(username, shortlink):
                                                       user='plewebid_wp389',
                                                       password='plewebid_wp389')
             sql_select_Query = "UPDATE `active_time` SET `Time_Out`=NOW() WHERE `Username`='" + \
-                str(username)+"' AND `ContentId`='"+str(post_id)+"'"
+                str(username)+"' AND `ContentId`='"+str(post_id)+"' AND `Time_In`='"+str(datetime)+"'"
             cursor = mySQLconnection.cursor()
             cursor.execute(sql_select_Query)
         except Error as e:

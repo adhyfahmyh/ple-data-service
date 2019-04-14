@@ -14,7 +14,7 @@ def save_activity_log():
     if request.method == "POST":
         data = request.json
         
-        save.save_activity_log(data["username"], data["shortlink"])
+        save.save_activity_log(data["username"], data["shortlink"], data["datetime"])
         return "Saved"
 
 @app.route("/close_activity_log", methods=["POST"])
@@ -22,7 +22,7 @@ def close_activity_log():
     if request.method == "POST":
         data = request.json
 
-        save.save_close_date_activity(data["username"], data["shortlink"])
+        save.save_close_date_activity(data["username"], data["shortlink"], data["datetime"])
         return "Closed"
 
 if __name__ == "__main__":
