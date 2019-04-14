@@ -43,6 +43,7 @@ def is_activity_log_available(username, post_id):
 
 def save_activity_log(username, shortlink):
     post_id = get_content_id(shortlink)
+    save_open_date_activity(username, post_id)
     if is_activity_log_available(username, post_id):
         try:
             mySQLconnection = mysql.connector.connect(host='103.28.53.243',
@@ -77,3 +78,22 @@ def save_activity_log(username, shortlink):
             if(mySQLconnection.is_connected()):
                 mySQLconnection.close()
                 print("MySQL connection is closed")
+
+
+def save_open_date_activity(username, content_id):
+    try:
+        mySQLconnection = mysql.connector.connect(host='103.28.53.243',
+                                                  database='plewebid_wp389',
+                                                  user='plewebid_wp389',
+                                                  password='plewebid_wp389')
+        sql_select_Query = "INSERT INTO `active_time`(`Username`, `ContentId`, `Time_In`) VALUES ('" + \
+            username+"', '"+content_id+"', NOW())"
+        cursor = mySQLconnection.cursor()
+        cursor.execute(sql_select_Query)
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        # closing database connection.
+        if(mySQLconnection.is_connected()):
+            mySQLconnection.close()
+            print("MySQL connection is closed")
