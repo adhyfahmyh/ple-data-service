@@ -79,3 +79,23 @@ def save_close_date_activity(username, shortlink, datetime):
         cursor.execute(sql_select_Query)
     except Error as e:
         print("Error while connecting to MySQL", e)
+
+
+def save_bookmark(username, shortlink):
+    post_id = get_content_id(shortlink)
+    try:
+        sql_select_Query = "INSERT INTO `bookmark`(`Username`, `ContentId`) VALUES ('"+str(username)+"', '"+str(post_id)+"')"
+        cursor = mySQLconnection.cursor()
+        cursor.execute(sql_select_Query)
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+
+
+def remove_bookmark(username, shortlink):
+    post_id = get_content_id(shortlink)
+    try:
+        sql_select_Query = "DELETE FROM `bookmark` WHERE `Username`='"+str(username)+"' AND `ContentId`='"+str(post_id)+"'"
+        cursor = mySQLconnection.cursor()
+        cursor.execute(sql_select_Query)
+    except Error as e:
+        print("Error while connecting to MySQL", e)
