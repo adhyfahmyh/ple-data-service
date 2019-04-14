@@ -97,3 +97,45 @@ def save_open_date_activity(username, content_id):
         if(mySQLconnection.is_connected()):
             mySQLconnection.close()
             print("MySQL connection is closed")
+
+
+def is_activity_date_available(username, post_id):
+    try:
+        mySQLconnection = mysql.connector.connect(host='103.28.53.243',
+                                                  database='plewebid_wp389',
+                                                  user='plewebid_wp389',
+                                                  password='plewebid_wp389')
+        sql_select_Query = "SELECT * FROM `active_time` WHERE `Username` = '" + \
+            username+"' AND `ContentId` = '"+str(post_id)+"'"
+        cursor = mySQLconnection.cursor()
+        cursor.execute(sql_select_Query)
+        return cursor.fetchone() != None
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        # closing database connection.
+        if(mySQLconnection.is_connected()):
+            mySQLconnection.close()
+            print("MySQL connection is closed")
+
+
+def save_close_date_activity(username, shortlink):
+    print("Closed")
+    post_id = get_content_id(shortlink)
+    if is_activity_date_available(username, post_id):
+        try:
+            mySQLconnection = mysql.connector.connect(host='103.28.53.243',
+                                                      database='plewebid_wp389',
+                                                      user='plewebid_wp389',
+                                                      password='plewebid_wp389')
+            sql_select_Query = "UPDATE `active_time` SET `Time_Out`=NOW() WHERE `Username`='" + \
+                username+"' AND `ContentId`='"+post_id+"'"
+            cursor = mySQLconnection.cursor()
+            cursor.execute(sql_select_Query)
+        except Error as e:
+            print("Error while connecting to MySQL", e)
+        finally:
+            # closing database connection.
+            if(mySQLconnection.is_connected()):
+                mySQLconnection.close()
+                print("MySQL connection is closed")
