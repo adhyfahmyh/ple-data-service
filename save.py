@@ -1,6 +1,11 @@
 import mysql.connector
 from mysql.connector import Error
 
+mySQLconnection = mysql.connector.connect(host='103.28.53.243',
+                                          database='plewebid_wp389',
+                                          user='plewebid_wp389',
+                                          password='plewebid_wp389')
+
 
 def get_content_id(shortlink):
     try:
@@ -14,11 +19,6 @@ def get_content_id(shortlink):
         return cursor.fetchone()[0]
     except Error as e:
         print("Error while connecting to MySQL", e)
-    finally:
-        # closing database connection.
-        if(mySQLconnection.is_connected()):
-            mySQLconnection.close()
-            print("MySQL connection is closed")
 
 
 def is_activity_log_available(username, post_id):
@@ -34,11 +34,6 @@ def is_activity_log_available(username, post_id):
         return cursor.fetchone() != None
     except Error as e:
         print("Error while connecting to MySQL", e)
-    finally:
-        # closing database connection.
-        if(mySQLconnection.is_connected()):
-            mySQLconnection.close()
-            print("MySQL connection is closed")
 
 
 def save_activity_log(username, shortlink, datetime):
@@ -56,11 +51,6 @@ def save_activity_log(username, shortlink, datetime):
             cursor.execute(sql_select_Query)
         except Error as e:
             print("Error while connecting to MySQL", e)
-        finally:
-            # closing database connection.
-            if(mySQLconnection.is_connected()):
-                mySQLconnection.close()
-                print("MySQL connection is closed")
     else:
         try:
             mySQLconnection = mysql.connector.connect(host='103.28.53.243',
@@ -73,11 +63,6 @@ def save_activity_log(username, shortlink, datetime):
             cursor.execute(sql_select_Query)
         except Error as e:
             print("Error while connecting to MySQL", e)
-        finally:
-            # closing database connection.
-            if(mySQLconnection.is_connected()):
-                mySQLconnection.close()
-                print("MySQL connection is closed")
 
 
 def save_open_date_activity(username, content_id, datetime):
@@ -92,11 +77,6 @@ def save_open_date_activity(username, content_id, datetime):
         cursor.execute(sql_select_Query)
     except Error as e:
         print("Error while connecting to MySQL", e)
-    finally:
-        # closing database connection.
-        if(mySQLconnection.is_connected()):
-            mySQLconnection.close()
-            print("MySQL connection is closed")
 
 
 def is_activity_date_available(username, post_id):
@@ -112,30 +92,20 @@ def is_activity_date_available(username, post_id):
         return cursor.fetchone() != None
     except Error as e:
         print("Error while connecting to MySQL", e)
-    finally:
-        # closing database connection.
-        if(mySQLconnection.is_connected()):
-            mySQLconnection.close()
-            print("MySQL connection is closed")
 
 
 def save_close_date_activity(username, shortlink, datetime):
     print("Closed")
     post_id = get_content_id(shortlink)
-    if is_activity_date_available(username, post_id):
-        try:
-            mySQLconnection = mysql.connector.connect(host='103.28.53.243',
-                                                      database='plewebid_wp389',
-                                                      user='plewebid_wp389',
-                                                      password='plewebid_wp389')
-            sql_select_Query = "UPDATE `active_time` SET `Time_Out`=NOW() WHERE `Username`='" + \
-                str(username)+"' AND `ContentId`='"+str(post_id)+"' AND `Time_In`='"+str(datetime)+"'"
-            cursor = mySQLconnection.cursor()
-            cursor.execute(sql_select_Query)
-        except Error as e:
-            print("Error while connecting to MySQL", e)
-        finally:
-            # closing database connection.
-            if(mySQLconnection.is_connected()):
-                mySQLconnection.close()
-                print("MySQL connection is closed")
+    try:
+        mySQLconnection = mysql.connector.connect(host='103.28.53.243',
+                                                  database='plewebid_wp389',
+                                                  user='plewebid_wp389',
+                                                  password='plewebid_wp389')
+        sql_select_Query = "UPDATE `active_time` SET `Time_Out`=NOW() WHERE `Username`='" + \
+            str(username)+"' AND `ContentId`='"+str(post_id) + \
+            "' AND `Time_In`='"+str(datetime)+"'"
+        cursor = mySQLconnection.cursor()
+        cursor.execute(sql_select_Query)
+    except Error as e:
+        print("Error while connecting to MySQL", e)
