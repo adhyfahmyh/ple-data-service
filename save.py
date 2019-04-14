@@ -87,7 +87,7 @@ def save_open_date_activity(username, content_id):
                                                   user='plewebid_wp389',
                                                   password='plewebid_wp389')
         sql_select_Query = "INSERT INTO `active_time`(`Username`, `ContentId`, `Time_In`) VALUES ('" + \
-            username+"', '"+content_id+"', NOW())"
+            str(username)+"', '"+str(content_id)+"', NOW())"
         cursor = mySQLconnection.cursor()
         cursor.execute(sql_select_Query)
     except Error as e:
