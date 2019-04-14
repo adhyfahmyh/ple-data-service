@@ -45,7 +45,7 @@ def remove_bookmark():
     if request.method == "POST":
         data = request.json
 
-        save.save_bookmark(data["username"], data["shortlink"])
+        save.remove_bookmark(data["username"], data["shortlink"])
         return "Unbookmarked"
 
 
